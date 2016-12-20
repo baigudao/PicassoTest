@@ -2,6 +2,7 @@ package com.jackie.picassotest.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -26,6 +27,7 @@ public class MainActivity extends Activity {
     private Button button;
     private Button button_res;
     private Button button_file;
+    private Button button_next;
     private ImageView imageView;
 
     private TextView textView;
@@ -39,11 +41,14 @@ public class MainActivity extends Activity {
         button = (Button) findViewById(R.id.btn1);
         button_res = (Button) findViewById(R.id.btn2);
         button_file = (Button) findViewById(R.id.btn3);
+        button_next = (Button) findViewById(R.id.btn4);
         imageView = (ImageView) findViewById(R.id.iv);
         textView = (TextView) findViewById(R.id.tv);
 
-        File file = new File(Environment.getExternalStorageDirectory(), "110720490449.png");
-        Toast.makeText(MainActivity.this, "是否存在图片:" + file.exists(), Toast.LENGTH_SHORT).show();
+
+        Uri uri = resourceIdToUri(this, R.mipmap.ic_fire);
+        textView.setText(uri.toString());
+        Picasso.with(this).load(uri).into(imageView);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,10 +68,12 @@ public class MainActivity extends Activity {
                 loadImageFile();
             }
         });
-
-        Uri uri = resourceIdToUri(this, R.mipmap.ic_fire);
-        textView.setText(uri.toString());
-        Picasso.with(this).load(uri).into(imageView);
+        button_next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, SecondActivity.class));
+            }
+        });
     }
 
 
